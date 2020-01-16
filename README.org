@@ -1,0 +1,28 @@
+** Extracting argument types from Rcpp source code:
+
+#+BEGIN_SRC R
+  fun.dt <- nc::capture_all_str(
+    "../binsegRcpp/src/RcppExports.cpp",
+    "\n// ",
+    fun="[^ ]+",
+    body="(?:\n.*)*?",
+    "\n[}]")
+
+  arg.dt <- fun.dt[, {
+    dt <- nc::capture_all_str(
+      body,
+      "input_parameter< const Rcpp::",
+      type="[^ ]+",
+      " >::type ",
+      arg="[^(]+")
+    data.table::data.table(order=1:nrow(dt), dt)
+  }, by=name]
+#+END_SRC
+output is:
+#+BEGIN_SRC 
+                      name order          type          arg
+1:      rcpp_binseg_normal     1 NumericVector     data_vec
+2:      rcpp_binseg_normal     2 IntegerVector max_segments
+3: rcpp_binseg_normal_cost     1 NumericVector     data_vec
+4: rcpp_binseg_normal_cost     2 IntegerVector max_segments
+#+END_SRC
