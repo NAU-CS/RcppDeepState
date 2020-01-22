@@ -1,7 +1,7 @@
 ** Extracting argument types from Rcpp source code:
 
 Source file is
-[[https://github.com/tdhock/binsegRcpp/blob/master/src/RcppExports.cpp]]
+[[https://github.com/tdhock/binsegRcpp/blob/int/src/RcppExports.cpp]]
 which should be copied and used as a test case.
 
 #+BEGIN_SRC R
@@ -15,20 +15,22 @@ which should be copied and used as a test case.
   arg.dt <- fun.dt[, {
     dt <- nc::capture_all_str(
       body,
-      "input_parameter< const Rcpp::",
-      type="[^ ]+",
-      " >::type ",
+      "input_parameter<",
+      type=".*?",
+      ">::type ",
       arg="[^(]+")
     data.table::data.table(order=1:nrow(dt), dt)
-  }, by=name]
+  }, by=fun]
 #+END_SRC
 output is:
 #+BEGIN_SRC 
-                      name order          type          arg
-1:      rcpp_binseg_normal     1 NumericVector     data_vec
-2:      rcpp_binseg_normal     2 IntegerVector max_segments
-3: rcpp_binseg_normal_cost     1 NumericVector     data_vec
-4: rcpp_binseg_normal_cost     2 IntegerVector max_segments
+> arg.dt
+                       fun order                        type          arg
+1:      rcpp_binseg_normal     1  const Rcpp::NumericVector      data_vec
+2:      rcpp_binseg_normal     2  const Rcpp::IntegerVector  max_segments
+3: rcpp_binseg_normal_cost     1  const Rcpp::NumericVector      data_vec
+4: rcpp_binseg_normal_cost     2                        int          kmax
+> 
 #+END_SRC
 
 TODO try this regex on other R packages that use Rcpp.
