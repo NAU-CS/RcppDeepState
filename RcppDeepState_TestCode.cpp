@@ -7,53 +7,8 @@
 #include <stdlib.h>
 
 TEST(Random_Set, Ranges) {
-
-
-int number[] = DeepState_UIntInRange(0, num_elements-1)
-TEST(Runlength, EncodeDecode) {
-  char* str_randval ;
- OneOf(
-	    [&] {
-                 str_randval = malloc(MAX_STR_LEN);
-	         str_randval = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdef0123456789");
-	      },
-	    [&] 
-            {
-               str_randval = malloc(MAX_STR_LEN);
-               str_randval = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdefghijklmnopqrstuvwxyz");
-            },
-	    [&] 
-            {  int size_val = OneOf(DeepState_Int);
-               str_randval = malloc(size_val);
-               str_randval = DeepState_CStrUpToLen(size_val,"abcdefghijklmnopqrstuvwxyz");
-            }
-     );
-TEST(Runlength, EncodeDecode) {
-  char** str_vector_randval ;
- int size_val = OneOf(DeepState_Int);
-  str_vector_randval = new str_vector_randval*[max_val];
-  for(int i = 0; i < max_val ; i++ ){
-     if(size_val > max_val)
-     str_vector_randval[i] = new str_vector_randval[size_val];
-     else
-     str_vector_randval[i] = new str_vector_randval[max_val];
-  }
-for(int j =0 ; j < max_val; j++){
- OneOf(     
-	    [&] {
-                 str_randval[i] = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdef0123456789");
-	      },
-	    [&] 
-            {
-                   str_randval[i] = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdefghijklmnopqrstuvwxyz");
-            },
-	    [&] 
-            {         
-               str_randval = DeepState_CStrUpToLen(size_val,"abcdefghijklmnopqrstuvwxyz");
-            }
-     );
-}
-   int min_val = DeepState_MinInt();
+    Rcpp::RObject rcpp_result_gen;
+  int min_val = DeepState_MinInt();
    int max_val = DeepState_MaxInt();
    size_t size_limit ={max_val,DeepState_RandInt()};
    int rand_val = OneOf(size_limit);
@@ -96,14 +51,51 @@ for(int j =0 ; j < max_val; j++){
            [&] {
                  
            });
-       
-     
-   rcpp_result_gen = Rcpp::wrap(rcpp_binseg_normal(NumericRand_vec, IntegerRand_vec));
+
+
+  char* str_randval ;
+ OneOf(
+	    [&] {
+                 str_randval = malloc(MAX_STR_LEN);
+	         str_randval = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdef0123456789");
+	      },
+	    [&] 
+            {
+               str_randval = malloc(MAX_STR_LEN);
+               str_randval = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdefghijklmnopqrstuvwxyz");
+            },
+	    [&] 
+            {  int size_val = OneOf(DeepState_Int);
+               str_randval = malloc(size_val);
+               str_randval = DeepState_CStrUpToLen(size_val,"abcdefghijklmnopqrstuvwxyz");
+            }
+     );
+  char** str_vector_randval ;
+ int size_val = OneOf(DeepState_Int);
+  str_vector_randval = new str_vector_randval*[max_val];
+  for(int i = 0; i < max_val ; i++ ){
+     if(size_val > max_val)
+     str_vector_randval[i] = new str_vector_randval[size_val];
+     else
+     str_vector_randval[i] = new str_vector_randval[max_val];
+  }
+for(int j =0 ; j < max_val; j++){
+ OneOf(     
+	    [&] {
+                 str_randval[i] = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdef0123456789");
+	      },
+	    [&] 
+            {
+                   str_randval[i] = DeepState_CStrUpToLen(MAX_STR_LEN,"abcdefghijklmnopqrstuvwxyz");
+            },
+	    [&] 
+            {         
+               str_randval = DeepState_CStrUpToLen(size_val,"abcdefghijklmnopqrstuvwxyz");
+            }
+     );
+}
+  rcpp_result_gen = Rcpp::wrap(rcpp_binseg_normal(NumericRand_vec, IntegerRand_vec));
 }
 
-
-
-
-}
 
  
