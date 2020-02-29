@@ -1,15 +1,13 @@
 #include <deepstate/DeepState.hpp>
-#include "TestRcppharness.h"
 using namespace deepstate;
 
 class DeepState_Test{
 public:
-    Rcpp::List Missing_values(){
-        
+    Rcpp::NumericVector Exceptional_values(){
         Rcpp::NumericVector values = Rcpp::NumericVector::create(NA_REAL,R_NaN,R_PosInf,R_NegInf);
-        return Rcpp::List::create(values);
+        return values;
     }
-    Rcpp::List RcppDeepState_NumericVector()
+    Rcpp::NumericVector RcppDeepState_NumericVector()
     {
         int max_val = DeepState_MaxInt();
         size_t size_limit ={max_val,DeepState_RandInt()};
@@ -31,13 +29,13 @@ public:
                 },
                 [&] {
                     // need to check on this for NA,Nan,Inf,-Inf
-                    NumericRand_vec[i] = OneOf(Missing_values());
+                    NumericRand_vec[i] = OneOf(Exceptional_values());
                 },
             );
-            return Rcpp::List::create(NumericRand_vec);
+            return NumericRand_vec;
         }
     }
-    Rcpp::List RcppDeepState_NumericVector(int size_of_vector)
+    Rcpp::NumericVector RcppDeepState_NumericVector(int size_of_vector)
     {
         int low_val = DeepState_Double();
         int high_val = DeepState_Double();
@@ -45,7 +43,7 @@ public:
         for(int i=0; i< size_of_vector; i++){
             OneOf(
                 [&] {
-                    NumericRand_vec[i] = DeepState_Float();
+                    NumericRand_vec[i] = DeepState_Double();
                 },
                 [&] {
                     if(low_val > high_val)  
@@ -55,13 +53,13 @@ public:
                 },
                 [&] {
                     // need to check on this for NA,Nan,Inf,-Inf
-                    NumericRand_vec[i] = OneOf(Missing_values());
+                    NumericRand_vec[i] = OneOf(Exceptional_values());
                 },
             );
-            return Rcpp::List::create(NumericRand_vec);
+            return NumericRand_vec;
         }
     }
-Rcpp::List RcppDeepState_IntegerVector(){
+Rcpp::IntegerVector RcppDeepState_IntegerVector(){
         int min_val = DeepState_MinInt();
         int max_val = DeepState_MaxInt();
         int int_vector_size = DeepState_IntInRange(0,max_val);
@@ -79,11 +77,11 @@ Rcpp::List RcppDeepState_IntegerVector(){
                     IntegerRand_vec[i] = DeepState_UIntInRange(0, 1);
                 },
             );
-            return Rcpp::List::create(IntegerRand_vec);
+            return IntegerRand_vec;
         }
         
 }
-Rcpp::List RcppDeepState_IntegerVector(int size_of_vector){
+Rcpp::IntegerVector RcppDeepState_IntegerVector(int size_of_vector){
         Rcpp::IntegerVector IntegerRand_vec[size_of_vector];
         for(int i=0; i< size_of_vector; i++){
             OneOf(
@@ -98,7 +96,7 @@ Rcpp::List RcppDeepState_IntegerVector(int size_of_vector){
                     IntegerRand_vec[i] = DeepState_UIntInRange(0, 1);
                 },
             );
-            return Rcpp::List::create(IntegerRand_vec);
+            return IntegerRand_vec;
         }
 };
     
@@ -109,4 +107,3 @@ TEST(Random_Set, Ranges) {
     Rcpp::IntegerVector max_segments = deeptest.RcppDeepState_IntegerVector();
     rcpp_result_gen = Rcpp::wrap(rcpp_binseg_normal(data_vec, max_segments));
 }   
-
