@@ -71,11 +71,7 @@ Rcpp::IntegerVector RcppDeepState_IntegerVector(){
                 },
                 [&] {
                     IntegerRand_vec[i] = DeepState_IntInRange(min_val,max_val);
-                },
-                [&] {
-                    // 2^0 - 2^256
-                    IntegerRand_vec[i] = DeepState_UIntInRange(0, 1);
-                },
+                }
             );
             return IntegerRand_vec;
         }
@@ -90,11 +86,7 @@ Rcpp::IntegerVector RcppDeepState_IntegerVector(int size_of_vector){
                 },
                 [&] {
                     IntegerRand_vec[i] = DeepState_IntInRange(min_val,max_val);
-                },
-                [&] {
-                    // 2^0 - 2^256
-                    IntegerRand_vec[i] = DeepState_UIntInRange(0, 1);
-                },
+                }
             );
             return IntegerRand_vec;
         }
